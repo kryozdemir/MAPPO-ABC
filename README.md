@@ -19,7 +19,7 @@ MAPPO-ABC introduces a novel approach to multi-agent reinforcement learning by c
   - Exploratory Head (H3): Maximum exploration emphasis
 
 - **ABC-Based Head Selection**: Fitness-driven optimization for dynamic policy head selection
-- **StarCraft II Integration**: Tested on SMAC benchmark environments
+- **StarCraft Multi-Agent Challenge v2 (SMACv2)**: Tested on SMACv2 benchmark environments
 - **Comprehensive Logging**: Detailed metrics including head selection, fitness values, and performance
 
 ## Performance
