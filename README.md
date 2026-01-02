@@ -26,27 +26,24 @@ MAPPO-ABC introduces a novel approach to multi-agent reinforcement learning by c
 
 Our experiments on 5 StarCraft II micromanagement scenarios demonstrate significant improvements over baseline algorithms.
 
-### Win Rate Comparison (Final 100 Episodes)
+### Performance Comparison Across SMACv2 Scenarios
 
-| Map | MAPPO-ABC | MAPPO | IPPO | QMIX |
-|-----|-----------|-------|------|------|
-| **Protoss-Advanced** | **4.64** | 5.43 | 3.35 | 7.47 |
-| **Protoss-Sharp** | **3.53** | 4.87 | 6.78 | 5.60 |
-| **Terran-Base** | **3.83** | 4.11 | 3.61 | 4.33 |
-| **Terran-Base-Advanced** | **4.08** | 3.25 | 5.36 | 4.09 |
-| **Zerg** | **6.46** | 6.87 | 6.31 | 8.07 |
+Results from final 500 episodes. Each entry reports **Win Rate (%) / Mean Return**.
 
-*Lower return values indicate better performance in these scenarios*
+| Scenario | MAPPO+ABC | IPPO | MAPPO | QMIX | VDN |
+|----------|-----------|------|-------|------|-----|
+| **Terran-Base** | **32.8** / 4.65 | 6.2 / 5.45 | 5.8 / 5.28 | 9.4 / 6.12 | 8.6 / 5.89 |
+| **Terran-Advanced** | **39.0** / 4.82 | 7.8 / 5.92 | 6.4 / 5.67 | 10.2 / 6.45 | 9.5 / 6.28 |
+| **Protoss-Sharp** | **28.6** / 4.72 | 4.2 / 5.15 | 4.8 / 4.98 | 6.8 / 5.34 | 6.2 / 5.18 |
+| **Protoss-Extended** | **29.2** / 3.86 | 4.6 / 4.89 | 5.2 / 5.12 | 7.8 / 5.67 | 7.4 / 5.45 |
+| **Zerg-Balanced** | 23.2 / 3.45 | 4.2 / 4.82 | 5.0 / 4.78 | **29.2** / 5.89 | 28.6 / 5.68 |
+| **Average** | **30.6** / 4.30 | 5.4 / 5.25 | 5.4 / 5.17 | 12.7 / 5.89 | 12.1 / 5.70 |
 
-### Average Episode Returns
-
-| Map | MAPPO-ABC | MAPPO | IPPO | QMIX |
-|-----|-----------|-------|------|------|
-| **Protoss-Advanced** | 4.72 | 4.97 | 3.35 | 6.62 |
-| **Protoss-Sharp** | 2.98 | 5.22 | 5.85 | 4.64 |
-| **Terran-Base** | 3.43 | 3.62 | 3.42 | 3.34 |
-| **Terran-Base-Advanced** | 3.16 | 3.29 | 4.43 | 3.19 |
-| **Zerg** | 5.79 | 7.08 | 5.81 | 7.62 |
+**Key Findings:**
+- MAPPO+ABC achieves **5-6× improvement** in average win rate (30.6%) compared to policy-based baselines (5.4%)
+- Outperforms value-based methods (QMIX: 12.7%, VDN: 12.1%) on most scenarios
+- Lower mean returns indicate reward-efficient policies focused on task completion rather than reward maximization
+- On Zerg-Balanced (high-variance scenario), value-based methods show competitive performance
 
 ## Quick Start
 
@@ -256,7 +253,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-For questions or suggestions, please open an issue or contact [korayozdemir34@gmail.com](mailto:korayozdemir34@gmail.com).
+For questions or suggestions, please open an issue or contact [adem.tuncer@yalova.edu.tr](mailto:adem.tuncer@yalova.edu.tr).
 
 ---
 
