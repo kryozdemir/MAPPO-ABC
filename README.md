@@ -13,13 +13,13 @@ MAPPO-ABC introduces a novel approach to multi-agent reinforcement learning by c
 ### Key Features
 
 - **Multi-Head Policy Architecture**: 4 distinct policy heads with varying exploration strategies
-  - Conservative Head (H0): Low exploration, high exploitation
-  - Balanced Head (H1): Moderate exploration-exploitation
-  - Aggressive Head (H2): High exploration focus
-  - Exploratory Head (H3): Maximum exploration emphasis
+  - Heads are initialized with different random seeds
+  - Behavioral specialization emerges naturally during training
+  - No manual role assignment - diversity through stochastic initialization
+  - ABC-based selection dynamically chooses the most suitable head
 
 - **ABC-Based Head Selection**: Fitness-driven optimization for dynamic policy head selection
-- **StarCraft Multi-Agent Challenge v2 (SMACv2)**: Tested on SMACv2 benchmark environments
+- **StarCraft Multi-Agent Challenge v2 (SMACv2) Integration**: Tested on SMACv2 benchmark environments
 - **Comprehensive Logging**: Detailed metrics including head selection, fitness values, and performance
 
 ## Performance
