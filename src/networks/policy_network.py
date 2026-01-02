@@ -113,13 +113,16 @@ class MultiHeadPolicyNetwork(nn.Module):
             nn.ReLU()
         )
         
-        # Initialize 4 policy heads with different characteristics
-        # These configurations were tuned for StarCraft II environments
+        # Initialize 4 policy heads with different random seeds
+        # Heads are NOT manually assigned roles - behavioral specialization
+        # emerges naturally during training through ABC-based selection
+        # As stated in the paper: "Policy heads are initialized using different 
+        # random seeds, introducing stochastic variation in their initial action preferences"
         head_configs = [
-            {'temperature': 0.8, 'exploration_noise': 0.05},   # H0: Conservative
-            {'temperature': 1.0, 'exploration_noise': 0.15},   # H1: Balanced
-            {'temperature': 1.2, 'exploration_noise': 0.25},   # H2: Aggressive
-            {'temperature': 1.5, 'exploration_noise': 0.40}    # H3: Exploratory
+            {'temperature': 1.0, 'exploration_noise': 0.0},   # Head 0
+            {'temperature': 1.0, 'exploration_noise': 0.0},   # Head 1
+            {'temperature': 1.0, 'exploration_noise': 0.0},   # Head 2
+            {'temperature': 1.0, 'exploration_noise': 0.0}    # Head 3
         ]
         
         self.heads = nn.ModuleList([
@@ -132,15 +135,17 @@ class MultiHeadPolicyNetwork(nn.Module):
             for config in head_configs[:n_heads]
         ])
         
-        # Initialize weights
-        self._initialize_weights()
+        # Initialize weights with different random seeds for each head
+        # This creates initial behavioral diversity without manual role assignment
+        for i, head in enumerate(self.heads):
+            torch.manual_seed(42 + i)  # Different seed for each head
+            for module in head.modules():
+                if isinstance(module, nn.Linear):
+                    nn.init.orthogonal_(module.weight, gain=0.01)
+                    nn.init.constant_(module.bias, 0)
         
-    def _initialize_weights(self):
-        """Initialize network weights using orthogonal initialization."""
-        for module in self.modules():
-            if isinstance(module, nn.Linear):
-                nn.init.orthogonal_(module.weight, gain=0.01)
-                nn.init.constant_(module.bias, 0)
+        # Reset to original seed after initialization
+        torch.manual_seed(42)
     
     def forward(
         self,
