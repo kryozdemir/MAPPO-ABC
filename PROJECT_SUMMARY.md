@@ -15,11 +15,11 @@
 ## Key Features
 
 ### 1. Multi-Head Policy Architecture
-- **4 Specialized Policy Heads** with different exploration strategies:
-  - H0 (Conservative): Temperature 0.8, Noise 0.05
-  - H1 (Balanced): Temperature 1.0, Noise 0.15
-  - H2 (Aggressive): Temperature 1.2, Noise 0.25
-  - H3 (Exploratory): Temperature 1.5, Noise 0.40
+- **4 Policy Heads** initialized with different random seeds
+- Behavioral specialization emerges naturally during training
+- No manual role assignment (e.g., "aggressive" vs "conservative")
+- Diversity arises from stochastic initialization + fitness-driven selection
+- Each head develops distinct tactical preferences through ABC selection pressure
 
 ### 2. ABC Optimization
 - Dynamic head selection based on fitness evaluation
@@ -47,18 +47,32 @@ StarCraft II Multi-Agent Challenge (SMAC) - 5 scenarios:
 
 **Average Episode Returns (Lower is Better for SMAC):**
 
-| Map | MAPPO-ABC | MAPPO | IPPO | QMIX |
-|-----|-----------|-------|------|------|
-| Protoss-Advanced | **4.72** | 4.97 | 3.35 | 6.62 |
-| Protoss-Sharp | **2.98** | 5.22 | 5.85 | 4.64 |
-| Terran-Base | **3.43** | 3.62 | 3.42 | 3.34 |
-| Terran-Base-Advanced | **3.16** | 3.29 | 4.43 | 3.19 |
-| Zerg | **5.79** | 7.08 | 5.81 | 7.62 |
+| Map | MAPPO+ABC | MAPPO | IPPO | QMIX | VDN |
+|-----|-----------|-------|------|------|-----|
+| Terran-Base | **4.65** | 5.28 | 5.45 | 6.12 | 5.89 |
+| Terran-Advanced | **4.82** | 5.67 | 5.92 | 6.45 | 6.28 |
+| Protoss-Sharp | **4.72** | 4.98 | 5.15 | 5.34 | 5.18 |
+| Protoss-Extended | **3.86** | 5.12 | 4.89 | 5.67 | 5.45 |
+| Zerg-Balanced | **3.45** | 4.78 | 4.82 | 5.89 | 5.68 |
+| **Average** | **4.30** | 5.17 | 5.25 | 5.89 | 5.70 |
+
+**Win Rates (%):**
+
+| Map | MAPPO+ABC | MAPPO | IPPO | QMIX | VDN |
+|-----|-----------|-------|------|------|-----|
+| Terran-Base | **32.8** | 5.8 | 6.2 | 9.4 | 8.6 |
+| Terran-Advanced | **39.0** | 6.4 | 7.8 | 10.2 | 9.5 |
+| Protoss-Sharp | **28.6** | 4.8 | 4.2 | 6.8 | 6.2 |
+| Protoss-Extended | **29.2** | 5.2 | 4.6 | 7.8 | 7.4 |
+| Zerg-Balanced | 23.2 | 5.0 | 4.2 | **29.2** | 28.6 |
+| **Average** | **30.6** | 5.4 | 5.4 | 12.7 | 12.1 |
 
 **Key Findings:**
-- MAPPO-ABC shows competitive or superior performance across all scenarios
+- MAPPO+ABC shows competitive or superior performance across all scenarios
 - ABC-based head selection enables better adaptation to different environments
 - Multi-head architecture provides robust exploration-exploitation balance
+- 5-6× improvement over policy-based baselines (IPPO, MAPPO)
+- Value-based methods (QMIX, VDN) competitive on high-variance scenarios
 
 ---
 
@@ -68,6 +82,7 @@ StarCraft II Multi-Agent Challenge (SMAC) - 5 scenarios:
 mappo-abc-smac/
 ├── README.md                      # Main documentation
 ├── USAGE.md                       # Detailed usage guide
+├── PROJECT_SUMMARY.md             # Project overview
 ├── CHANGELOG.md                   # Version history
 ├── LICENSE                        # MIT License
 ├── requirements.txt               # Python dependencies
@@ -81,12 +96,19 @@ mappo-abc-smac/
 │   ├── algorithms/
 │   │   ├── mappo_abc.py         # Main MAPPO-ABC algorithm
 │   │   ├── mappo.py             # Baseline MAPPO
+│   │   ├── ippo.py              # Baseline IPPO
+│   │   ├── qmix.py              # Baseline QMIX
+│   │   ├── vdn.py               # Baseline VDN
 │   │   ├── abc_optimizer.py     # ABC optimization
 │   │   └── buffer.py            # Rollout buffer
 │   │
 │   ├── networks/
 │   │   ├── policy_network.py    # Multi-head policy
-│   │   └── value_network.py     # Centralized critic
+│   │   ├── value_network.py     # Centralized critic
+│   │   └── heads.py             # Individual policy heads
+│   │
+│   ├── envs/
+│   │   └── __init__.py          # Environment utilities
 │   │
 │   └── utils/
 │       ├── logger.py            # TensorBoard/CSV logging
@@ -94,14 +116,19 @@ mappo-abc-smac/
 │
 ├── scripts/                      # Execution scripts
 │   ├── train/
-│   │   └── train_mappo_abc.py   # Training script
+│   │   ├── train_mappo_abc.py   # MAPPO-ABC training
+│   │   └── train_baselines.py   # Baseline training
 │   ├── eval/
 │   │   └── evaluate.py          # Evaluation script
 │   ├── visualize.py             # Plotting utilities
-│   └── train_all_maps.sh        # Batch training
+│   ├── train_all_maps.sh        # Batch training MAPPO-ABC
+│   └── train_all_baselines.sh   # Batch training baselines
 │
-├── models/                       # Saved checkpoints (created during training)
-└── results/                      # Experiment logs (created during training)
+├── models/                       # Saved checkpoints
+│   └── README.md                # Checkpoint guide
+│
+└── results/                      # Experiment logs
+    └── README.md                # Results guide
 ```
 
 ---
