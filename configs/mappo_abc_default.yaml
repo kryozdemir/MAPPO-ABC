@@ -34,4 +34,3 @@ save_interval: 100           # Save model every N episodes
 
 # Device
 device: 'cuda'               # 'cuda' or 'cpu'
-
