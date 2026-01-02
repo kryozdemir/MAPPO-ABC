@@ -256,7 +256,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-For questions or suggestions, please open an issue or contact [adem.tuncer@yalova.edu.tr](mailto:adem.tuncer@yalova.edu.tr).
+For questions or suggestions, please open an issue or contact [korayozdemir34@gmail.com](mailto:korayozdemir34@gmail.com).
 
 ---
 
