@@ -1,1 +1,37 @@
+# MAPPO-ABC Default Configuration
+
+# Network Architecture
+hidden_dim: 256              # Hidden layer dimension
+n_heads: 4                   # Number of policy heads
+
+# Training Hyperparameters
+lr: 0.0003                   # Learning rate (3e-4)
+gamma: 0.99                  # Discount factor
+gae_lambda: 0.95             # GAE lambda parameter
+clip_param: 0.2              # PPO clipping parameter
+value_loss_coef: 1.0         # Value loss coefficient
+entropy_coef: 0.01           # Entropy regularization coefficient
+max_grad_norm: 10.0          # Maximum gradient norm for clipping
+
+# Training Loop
+batch_size: 32               # Mini-batch size for updates
+n_epochs: 4                  # Number of update epochs per rollout
+
+# ABC Optimizer Configuration
+abc:
+  food_sources: 20           # Number of food sources
+  iterations: 50             # ABC iterations per update
+  limit: 10                  # Abandonment limit
+
+# Environment Settings
+max_episode_steps: 400       # Maximum steps per episode
+n_parallel_envs: 1           # Number of parallel environments
+
+# Logging
+log_interval: 10             # Log every N episodes
+eval_interval: 50            # Evaluate every N episodes
+save_interval: 100           # Save model every N episodes
+
+# Device
+device: 'cuda'               # 'cuda' or 'cpu'
 
