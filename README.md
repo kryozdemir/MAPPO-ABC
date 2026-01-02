@@ -103,23 +103,33 @@ mappo-abc-smac/
 │   │   ├── value_network.py      # Critic network
 │   │   └── heads.py              # Individual policy heads
 │   ├── envs/
-│   │   └── smac_wrapper.py       # SMAC environment wrapper
+│   │   └── __init__.py           # Environment utilities
 │   └── utils/
 │       ├── logger.py             # Logging utilities
-│       ├── config.py             # Configuration management
 │       └── utils.py              # Helper functions
 ├── configs/
-│   ├── mappo_abc_default.yaml    # Default configuration
-│   └── maps/                     # Map-specific configs
+│   └── mappo_abc_default.yaml    # Default configuration
 ├── scripts/
 │   ├── train/
 │   │   ├── train_mappo_abc.py    # MAPPO-ABC training script
 │   │   └── train_baselines.py    # Baseline training script
-│   └── eval/
-│       └── evaluate.py           # Evaluation script
-├── models/                        # Saved model checkpoints
-├── results/                       # Experiment results
-└── requirements.txt
+│   ├── eval/
+│   │   └── evaluate.py           # Evaluation script
+│   ├── visualize.py              # Results visualization
+│   ├── train_all_maps.sh         # Batch training on all maps
+│   └── train_all_baselines.sh    # Batch training for baselines
+├── models/
+│   └── README.md                 # Model checkpoint guide
+├── results/
+│   └── README.md                 # Results directory guide
+├── README.md                      # Main documentation
+├── USAGE.md                       # Detailed usage guide
+├── PROJECT_SUMMARY.md             # Project overview
+├── CHANGELOG.md                   # Version history
+├── LICENSE                        # MIT License
+├── requirements.txt               # Python dependencies
+├── setup.py                       # Package setup
+└── install_sc2.sh                 # StarCraft II installer
 ```
 
 ## Configuration
